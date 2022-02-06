@@ -1,0 +1,21 @@
+---
+- name: "Get information"
+  connection: local
+  hosts: cath
+  gather_facts: false
+  vars:
+    vlan_4: 4
+    vlan_name4: Printers
+    
+  tasks:
+    - name: Config Vlan ID's
+      ios_config:
+        lines:
+          - name {{ vlan_name4 }}
+        parents: vlan {{ vlan_4 }}
+
+    - name: Show vlans
+      ios_command:
+        commands: show vlan brief
+      register: show_vlan
+    - debug: var=show_vlan.stdout_lines  
