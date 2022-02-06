@@ -1,0 +1,26 @@
+---
+- name: "Get information"
+  hosts: cath
+  gather_facts: false
+
+  tasks:
+    - name: "gather facts (IOS)"
+      raw: "show ver"
+      register: print_output
+    - debug: var=print_output.stdout_lines
+ 
+    - name: "show interface ip"
+      raw: "show ip inter br"
+      register: print_output
+    - debug: var=print_output.stdout_lines
+    - name: "config mode"
+      raw: "conf ter"
+    - debug: var=print_output.stdout_lines
+    - name: "Create VLANS"
+      raw: "vlan 4"
+    - debug: var=print_output.stdout_lines
+    - name: "Adding vlan name"  
+      raw: "name printers"
+    - debug: var=print_output.stdout_lines
+
+
