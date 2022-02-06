@@ -1,0 +1,19 @@
+---
+- name: "Get information"
+  hosts: csr1000v
+  connection: local
+  gather_facts: false
+
+  tasks:  
+   
+    - ios_ntp:
+          server: 10.211.0.25
+          source_int: GigabitEthernet1
+          logging: false
+          state: present
+    - name: show ios version
+      ios_command:
+        commands:
+          - show ntp association
+      register: print_output
+    - debug: var=print_output.stdout_lines
